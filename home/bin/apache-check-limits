@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# check the average size of apache processes
+#
+# source: https://gist.github.com/tbjers/4496984#file-check-apache-instances-sh
+#
+
+ps -ylC httpd --sort:rss | awk '{ s += $8; } END \
+{ print "Average Size:", s/NR/1024, "MB,", NR, \
+"servers, Total usage:", (s/NR/1024)*NR, "MB, Max Servers:", \
+6500/(s/NR/1024) }'
