@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# create a directory for each of your AWS environment
+# in ~/.aws/envs
+
+BASE_PATH=~/.aws/envs
+
+if [ -n $1 ]; then
+  echo "\nMissing parameter:\n\t$0 <environment>\n"
+  echo "Valid parameters are:"
+  for I in $BASE_PATH/*; do
+    echo "\t" $(basename $I)
+  done
+  echo "\n"
+  exit 1
+fi  
+
+ENV=$1
+
+EC2_HOME={$BASE_PATH}/{$ENV}
+export EC2_PRIVATE_KEY=$(basename `ls -1 {$EC2_HOME}/pk-*`)
+export EC2_CERT=$(basename `ls -1 {$EC2_HOME}/cert-*`)
+
+export EC2_URL=https://eu-west-1.ec2.amazonaws.com
+export JAVA_HOME=/usr/lib/jvm/java-6-sun/
+
